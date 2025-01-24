@@ -19,7 +19,10 @@ function App() {
     e.preventDefault();
     setFilm(preventDefault => [...preventDefault, { name: newFilm, id: `${generateId.getFullYear()}${generateId.getMonth()}${generateId.getDay()}${generateId.getHours()}${generateId.getMinutes()}${generateId.getSeconds()}${generateId.getMilliseconds()}` }])
     setNewFilm('')
-    console.log(film)
+  }
+
+  const deleteFilm = (index: number) => {
+    setFilm(prevState => prevState.filter((_, films) => films !== index))
   }
 
   return (
@@ -39,7 +42,7 @@ function App() {
                 type="text" value={films.name}
                 onChange={(e) => { renameFilm(e.target.value, index) }}
               />
-              <button>X</button></li>
+              <button onClick={() => deleteFilm(index)}>X</button></li>
           ))}
         </ul>
       </div>
