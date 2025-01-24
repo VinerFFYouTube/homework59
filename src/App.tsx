@@ -4,8 +4,10 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
+  const [newFilm, setNewFilm] = useState('')
+
   const [film, setFilm] = useState([
-    { name: 'interstellar' },
+    { name: 'interstellar',},
     { name: 'bleach' },
     { name: 'hunter' }
   ])
@@ -15,12 +17,19 @@ function App() {
     setFilm(rename)
   }
 
+  const addFilm = (e: React.FormEvent) => {
+    e.preventDefault();
+    setFilm(preventDefault => [...preventDefault, {name: newFilm}])
+  }
+
   return (
     <>
       <div className="main-div">
         <div className="input-window">
-          <input type="text" />
-          <button className='m-3'>add</button>
+          <form onSubmit={addFilm}>
+            <input type="text" onChange={e => setNewFilm(e.target.value)}/>
+            <button className='m-3' type='submit'>add</button>
+          </form>
         </div>
         <h3>To watch list:</h3>
         <ul>
