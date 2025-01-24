@@ -6,11 +6,8 @@ import './App.css'
 function App() {
   const [newFilm, setNewFilm] = useState('')
 
-  const [film, setFilm] = useState([
-    { name: 'interstellar',},
-    { name: 'bleach' },
-    { name: 'hunter' }
-  ])
+  const [film, setFilm] = useState<{ name: string, id: string }[]>([])
+
   const renameFilm = (nameFilm: string, index: number) => {
     const rename = [...film];
     rename[index] = { ...rename[index], name: nameFilm }
@@ -18,8 +15,11 @@ function App() {
   }
 
   const addFilm = (e: React.FormEvent) => {
+    const generateId = new Date()
     e.preventDefault();
-    setFilm(preventDefault => [...preventDefault, {name: newFilm}])
+    setFilm(preventDefault => [...preventDefault, { name: newFilm, id: `${generateId.getFullYear()}${generateId.getMonth()}${generateId.getDay()}${generateId.getHours()}${generateId.getMinutes()}${generateId.getSeconds()}${generateId.getMilliseconds()}` }])
+    setNewFilm('')
+    console.log(film)
   }
 
   return (
@@ -27,7 +27,7 @@ function App() {
       <div className="main-div">
         <div className="input-window">
           <form onSubmit={addFilm}>
-            <input type="text" onChange={e => setNewFilm(e.target.value)}/>
+            <input type="text" value={newFilm} onChange={e => setNewFilm(e.target.value)} />
             <button className='m-3' type='submit'>add</button>
           </form>
         </div>
