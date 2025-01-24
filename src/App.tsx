@@ -1,14 +1,19 @@
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
   const [film, setFilm] = useState([
-    { name: 'interstellar', year: 2016 },
-    { name: 'bleach', year: 2016 },
-    { name: 'goku', year: 2016 }
+    { name: 'interstellar' },
+    { name: 'bleach' },
+    { name: 'hunter' }
   ])
+  const renameFilm = (nameFilm: string, index: number) => {
+    const rename = [...film];
+    rename[index] = { ...rename[index], name: nameFilm }
+    setFilm(rename)
+  }
 
   return (
     <>
@@ -20,7 +25,12 @@ function App() {
         <h3>To watch list:</h3>
         <ul>
           {film.map((films, index) => (
-            <li key={index}><input type="text" value={films.name}/> <button>X</button></li>
+            <li
+              key={index}><input
+                type="text" value={films.name}
+                onChange={(e) => { renameFilm(e.target.value, index) }}
+              />
+              <button>X</button></li>
           ))}
         </ul>
       </div>
