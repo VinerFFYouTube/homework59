@@ -4,30 +4,26 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [film, setFilm] = useState([
+    { name: 'interstellar', year: 2016 },
+    { name: 'bleach', year: 2016 },
+    { name: 'goku', year: 2016 }
+  ])
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="main-div">
+        <div className="input-window">
+          <input type="text" />
+          <button className='m-3'>add</button>
+        </div>
+        <h3>To watch list:</h3>
+        <ul>
+          {film.map((films, index) => (
+            <li key={index}><input type="text" value={films.name}/> <button>X</button></li>
+          ))}
+        </ul>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
