@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import AddNewFilm from './components/AddNewFilm/AddNewFilm'
+import ListFilm from './components/ListFilm/ListFilm'
 
 function App() {
   const [newFilm, setNewFilm] = useState('')
@@ -15,9 +15,13 @@ function App() {
   }
 
   const addFilm = (e: React.FormEvent) => {
-    const generateId = new Date()
     e.preventDefault();
-    setFilm(preventDefault => [...preventDefault, { name: newFilm, id: `${generateId.getFullYear()}${generateId.getMonth()}${generateId.getDay()}${generateId.getHours()}${generateId.getMinutes()}${generateId.getSeconds()}${generateId.getMilliseconds()}` }])
+    const generateId = new Date()
+    if(newFilm.length > 0) {
+      setFilm(prevState => [...prevState, { name: newFilm, id: `${generateId.getFullYear()}${generateId.getMonth()}${generateId.getDay()}${generateId.getHours()}${generateId.getMinutes()}${generateId.getSeconds()}${generateId.getMilliseconds()}` }])
+    } else {
+      return
+    }
     setNewFilm('')
   }
 
@@ -25,24 +29,23 @@ function App() {
     setFilm(prevState => prevState.filter((_, films) => films !== index))
   }
 
+  useEffect(() => {
+    console.log("App re-rendered\n");
+  });
+
+
   return (
     <>
       <div className="main-div">
         <div className="input-window">
           <form onSubmit={addFilm}>
-            <input type="text" value={newFilm} onChange={e => setNewFilm(e.target.value)} />
-            <button className='m-3' type='submit'>add</button>
+            <AddNewFilm name={newFilm} setNewFilm={setNewFilm} />
           </form>
         </div>
         <h3>To watch list:</h3>
         <ul>
           {film.map((films, index) => (
-            <li
-              key={index}><input
-                type="text" value={films.name}
-                onChange={(e) => { renameFilm(e.target.value, index) }}
-              />
-              <button onClick={() => deleteFilm(index)}>X</button></li>
+            <ListFilm key={index} filmName={films.name} deleteFIlmFunction={() => deleteFilm(index)} renameFilmFunction={renameFilm} index={index} />
           ))}
         </ul>
       </div>
