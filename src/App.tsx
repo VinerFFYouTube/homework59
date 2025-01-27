@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import './App.css'
+import Button from './components/Button/Button'
 
 function App() {
 
@@ -32,7 +33,8 @@ function App() {
 
   return (
     <>
-      <button onClick={() => zapros()}>запросить шутку</button>
+      {/* <button onClick={() => zapros()}>запросить шутку</button> */}
+      <Button memButton={() => zapros()}/>
       {mem.map((mems, index) => (
         <p key={index}>{mems}</p>
       ))}
